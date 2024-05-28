@@ -1,48 +1,57 @@
-type CardCategory =
-	| 'другое'
-	| 'софт-скил'
-	| 'дополнительное'
-	| 'кнопка'
-	| 'хард-скил';
-
+//Карточка
 export interface IProduct {
 	id: string;
 	description: string;
 	image: string;
 	title: string;
-	category: CardCategory;
+	category: string;
 	price: number | null;
-	selected: boolean;
+	isOrdered: boolean;
 }
 
-export interface IOrder {
+//Отслеживание карточки
+export interface IOrderStatus {
+	isOrdered: boolean;
+}
+
+//Общий тип лота
+export type ILot = IProduct & IOrderStatus;
+
+//Интерфейс формы введения адреса и способа оплаты
+export interface IOrderAddressForm {
+	address: string;
+	payment: string;
+}
+//Интефрейс формы введения контактных данных
+export interface IOrderContactsForm {
+	email: string;
+	phone: string;
+}
+
+//Общий тип формы заказа
+export type IOrderForm = IOrderAddressForm & IOrderContactsForm;
+
+export interface IOrder extends IOrderForm {
+	items: ILot[];
+}
+
+export interface IOrderAPI extends IOrderForm {
 	items: string[];
-	payment: string;
 	total: number;
-	address: string;
-	email: string;
-	phone: string;
 }
 
-export interface IOrderForm {
-	payment: string;
-	address: string;
-	email: string;
-	phone: string;
-}
+export type CatalogChangeEvent = {
+	catalog: ILot[];
+};
 
-export interface IShoppingState {
-	basketItems: IProduct[];
-	storeItems: IProduct[];
-	currentOrder: IOrder;
-	addItemToBasket(product: IProduct): void;
-	removeItemFromBasket(productId: string): void;
-	emptyBasket(): void;
-	calculateBasketItemCount(): number;
-	calculateTotalBasketPrice(): number;
-	loadStoreItems(): void;
-	validateContactInformation(): boolean;
-	validateCurrentOrder(): boolean;
-	resetCurrentOrder(): boolean;
-	resetSelectedItems(): void;
-  }
+export type IFormErrors = Partial<Record<keyof IOrderForm, string>>;
+
+export type IBasketItem = Pick<ILot, 'id' | 'title' | 'price'>;
+
+export interface IAppState {
+	catalog: ILot[];
+	basket: ILot[];
+	preview: string | null;
+	order: IOrder | null;
+	loading: boolean;
+}

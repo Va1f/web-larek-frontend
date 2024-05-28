@@ -1,6 +1,7 @@
 @use "variables" as *;
 @use "mixins";
 
+
 .modal {
   @include mixins.sublayer;
   height: max-content;

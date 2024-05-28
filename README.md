@@ -494,25 +494,21 @@ export interface IProduct {
 	description: string;
 	image: string;
 	title: string;
-	category: CardCategory;
+	category: string;
 	price: number | null;
-	selected: boolean;
+	isOrdered: boolean;
 }
 
 ```
 
-Интерфейс, описывающий поля заказа товара
+Интерфейс, отслеживание карточки
 
 ```
 
-export interface IOrder {
-	items: string[];
-	payment: string;
-	total: number;
-	address: string;
-	email: string;
-	phone: string;
+export interface IOrderStatus {
+	isOrdered: boolean;
 }
+
 
 ```
 Интерфейс формы введения адреса и способа оплаты
@@ -537,20 +533,12 @@ export interface IOrderContactsForm {
 
 ```
 
-export interface IShoppingState {
-	basketItems: IProduct[];
-	storeItems: IProduct[];
-	currentOrder: IOrder;
-	addItemToBasket(product: IProduct): void;
-	removeItemFromBasket(productId: string): void;
-	emptyBasket(): void;
-	calculateBasketItemCount(): number;
-	calculateTotalBasketPrice(): number;
-	loadStoreItems(): void;
-	validateContactInformation(): boolean;
-	validateCurrentOrder(): boolean;
-	resetCurrentOrder(): boolean;
-	resetSelectedItems(): void;
+export interface IAppState {
+	catalog: ILot[];
+	basket: ILot[];
+	preview: string | null;
+	order: IOrder | null;
+	loading: boolean;
 }
 
 ```

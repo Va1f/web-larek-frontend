@@ -2,15 +2,15 @@ import { AppState, LotItem } from './components/AppData';
 import { LarekAPI } from './components/LarekAPI';
 import { OrderAddress, OrderContact } from './components/Order';
 import { Page } from './components/Page';
-import { EventEmitter } from './components/base/events';
-import { Basket, BasketItem } from './components/common/Basket';
+import { EventEmitter } from './components/base/Events';
+import { Basket, BasketItem } from './components/Basket';
 import { Modal } from './components/common/Modal';
 import './scss/styles.scss';
 import { CatalogChangeEvent, IOrderForm } from './types';
 import { API_URL, CDN_URL } from './utils/constants';
 import { ensureElement, cloneTemplate } from './utils/utils';
 import { AuctionItem, Card } from './components/Card';
-import { Success } from './components/common/Success';
+import { Success } from './components/Success';
 
 const events = new EventEmitter();
 const api = new LarekAPI(CDN_URL, API_URL);
@@ -129,7 +129,7 @@ events.on('lot:changed', () => {
 events.on('order:open', () => {
 	modal.render({
 		content: order.render({
-			address: order.address,
+			address: '',
 			payment: order.payment,
 			valid: false,
 			errors: [],
